@@ -1,4 +1,4 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving, MultiParamTypeClasses, DeriveGeneric, FlexibleInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving, MultiParamTypeClasses, DeriveGeneric, FlexibleInstances, OverlappingInstances #-}
 
 -- | Module implements serialization for key-value (with custom key and value) dictionary
 --
@@ -68,7 +68,7 @@ import Data.Serialization.Codec
 
 -- | Deserialize from dictionary
 newtype FromDictionary k v a = FromDictionary { fromDict :: DecodeFrom (M.Map k v) a }
-    deriving (Functor, Applicative, Alternative, Monad, MonadState (M.Map k v), MonadError String, Generic)
+    deriving (Functor, Applicative, Alternative, Monad, MonadFail, MonadState (M.Map k v), MonadError String, Generic)
 
 instance (Monoid k, IsString k, Ord k, Eq v) => GenericDecode (FromDictionary k v) where
     decodeStor name m = do
@@ -82,7 +82,7 @@ instance (Monoid k, IsString k, Ord k, Eq v) => Deserializer (FromDictionary k v
 
 -- | Serialize to dictionary
 newtype ToDictionary k v a = ToDictionary { toDict :: EncodeTo [(k, v)] a }
-    deriving (Functor, Applicative, Alternative, Monad, MonadWriter [(k, v)], MonadError String, Generic)
+    deriving (Functor, Applicative, Alternative, Monad, MonadFail, MonadWriter [(k, v)], MonadError String, Generic)
 
 instance (Monoid k, IsString k, Ord k, Eq v) => GenericEncode (ToDictionary k v) where
     encodeStor name m x = do
