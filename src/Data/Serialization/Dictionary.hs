@@ -91,8 +91,8 @@ instance (Monoid k, IsString k, Ord k, Eq v) => GenericEncode (ToDictionary k v)
         where
             name' = fromString name
 instance (Monoid k, IsString k, Ord k, Eq v) => Serializer (ToDictionary k v) (M.Map k v) where
-    serialize (ToDictionary v) = fmap M.fromList $ execWriterT v
-    serializeTail v = ToDictionary $ tell $ M.toList v
+    serialize (ToDictionary v) = fmap M.fromList $ encodeTo v
+    serializeTail v = tell $ M.toList v
 
 -- | Serializable to value
 class DictionaryValue v a where
