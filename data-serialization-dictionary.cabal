@@ -1,5 +1,5 @@
 name:                data-serialization-dictionary
-version:             0.1.0.0
+version:             0.2.0
 synopsis:            Serialization into dictionary
 -- description:         
 homepage:            http://github.com/mvoidex/data-serialization-dictionary
@@ -20,6 +20,6 @@ library
   build-depends:
     base >= 4.5 && < 6,
     mtl                          >= 2.0 && < 2.2,
-    containers               == 0.4.*,
-    data-serialization   == 0.1.*,
+    containers               == 0.5.*,
+    data-serialization   == 0.2.*,
     text                         == 0.11.*
