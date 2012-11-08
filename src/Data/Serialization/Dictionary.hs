@@ -78,7 +78,7 @@ instance (Monoid k, IsString k, Ord k, Eq v) => GenericDecode (FromDictionary k 
             name' = fromString name
             nullKey :: (Monoid k) => FromDictionary k v a -> k
             nullKey _ = mempty
-instance (Monoid k, IsString k, Ord k, Eq v) => Deserializer (FromDictionary k v) (M.Map k v)
+instance (Monoid k, IsString k, Ord k, Eq v) => Deserializer (M.Map k v) (FromDictionary k v)
 
 -- | Serialize to dictionary
 newtype ToDictionary k v a = ToDictionary { toDict :: EncodeTo [(k, v)] a }
@@ -90,7 +90,7 @@ instance (Monoid k, IsString k, Ord k, Eq v) => GenericEncode (ToDictionary k v)
         tell $ map (first (\k -> if k == mempty then name' else k)) $ M.toList v
         where
             name' = fromString name
-instance (Monoid k, IsString k, Ord k, Eq v) => Serializer (ToDictionary k v) (M.Map k v) where
+instance (Monoid k, IsString k, Ord k, Eq v) => Serializer (M.Map k v) (ToDictionary k v) where
     serialize (ToDictionary v) = fmap M.fromList $ encodeTo v
     serializeTail v = tell $ M.toList v
 
