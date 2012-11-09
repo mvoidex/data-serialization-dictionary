@@ -78,7 +78,8 @@ instance (Monoid k, IsString k, Ord k, Eq v) => GenericDecode (FromDictionary k 
             name' = fromString name
             nullKey :: (Monoid k) => FromDictionary k v a -> k
             nullKey _ = mempty
-instance (Monoid k, IsString k, Ord k, Eq v) => Deserializer (M.Map k v) (FromDictionary k v)
+instance (Monoid k, IsString k, Ord k, Eq v) => Deserializer (M.Map k v) (FromDictionary k v) where
+    deserialize = decodeFrom . fromDict
 
 -- | Serialize to dictionary
 newtype ToDictionary k v a = ToDictionary { toDict :: EncodeTo [(k, v)] a }
