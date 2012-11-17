@@ -73,7 +73,7 @@ newtype FromDictionary k v a = FromDictionary { fromDict :: DecodeFrom (M.Map k 
 instance (Monoid k, IsString k, Ord k, Eq v) => GenericDecode (FromDictionary k v) where
     decodeStor name m = do
         v <- state (M.lookup name' &&& M.delete name')
-        maybe (throwError "Key not found") (either throwError return . deserialize m . M.singleton (nullKey m)) v
+        either throwError return $ deserialize m $ maybe M.empty (M.singleton (nullKey m)) v
         where
             name' = fromString name
             nullKey :: (Monoid k) => FromDictionary k v a -> k
