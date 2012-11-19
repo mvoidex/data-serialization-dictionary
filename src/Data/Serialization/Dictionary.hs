@@ -42,7 +42,7 @@
 -- >encode some2 (Some 321 "world") == Right (fromList [("Renamed first field","321"),("someString","\"world\"")])
 --
 module Data.Serialization.Dictionary (
-    FromDictionary, ToDictionary,
+    FromDictionary(..), ToDictionary(..),
     DictionaryValue(..),
     Dictionarable,
     fromEntry, fromEntry_,
